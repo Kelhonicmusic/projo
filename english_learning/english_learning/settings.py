@@ -25,7 +25,8 @@ SECRET_KEY = 'django-insecure-k7rjtg_j--vc4u25stm3qaejl)mi^pu1j6&t6hx+7ce4+*&ojg
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['projo-rqtb.onrender.com', 'localhost', '127.0.0.1']
+ALLOWED_HOSTS = ['projo-2.onrender.com']
+
 
 
 PAYPAL_CLIENT_ID = 'YOUR_PAYPAL_CLIENT_ID'
