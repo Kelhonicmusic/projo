@@ -1,0 +1,160 @@
+{% extends 'main_app/base.html' %}
+
+{% block title %}Available Courses{% endblock %}
+
+{% block content %}
+<style>
+    /* Courses Section */
+    .courses-container {
+        max-width: 1000px;
+        margin: 40px auto;
+        padding: 20px;
+        background-color: #fff;
+        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+        border-radius: 10px;
+    }
+
+    .courses-container h1 {
+        font-size: 2.5rem;
+        margin-bottom: 20px;
+        text-align: center;
+        font-weight: 600;
+    }
+
+    /* Level Filter Section */
+    .level-filter {
+        text-align: center;
+        margin-bottom: 40px;
+        background-color: #f0f4f8;
+        padding: 20px;
+        border-radius: 10px;
+    }
+
+    .level-filter h2 {
+        font-size: 1.8rem;
+        color: #34495e;
+        margin-bottom: 15px;
+    }
+
+    .level-filter select {
+        padding: 8px;
+        font-size: 1rem;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        margin-right: 10px;
+        outline: none;
+    }
+
+    .level-filter button {
+        padding: 8px 20px;
+        font-size: 1rem;
+        background-color: #3498db;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+    }
+
+    .level-filter button:hover {
+        background-color: #2980b9;
+    }
+
+    /* Courses Section */
+    .courses-list h2 {
+        font-size: 2.2rem;
+        color: #34495e;
+        margin-bottom: 30px;
+        text-align: center;
+    }
+
+    /* Course Cards Layout */
+    .course-list {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-around;
+        gap: 30px; /* Adds space between columns */
+    }
+
+    .course-card {
+        background-color: #51e4b3;
+        width: 30%; /* This ensures 3 columns */
+        margin-bottom: 20px; /* Adds space between rows */
+        padding: 20px;
+        text-align: center;
+        border-radius: 10px;
+        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .course-card:hover {
+        transform: translateY(-10px);
+        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
+    }
+
+    .course-image {
+        width: 100%;
+        height: auto;
+        border-radius: 10px;
+    }
+
+    .course-card h3 {
+        font-size: 1.6rem;
+        margin-top: 15px;
+        color: #2c3e50;
+    }
+
+    .course-card p {
+        font-size: 1rem;
+        color: #34495e;
+        margin-top: 10px;
+    }
+
+    /* No Courses Message */
+    .no-courses-message {
+        text-align: center;
+        font-size: 1.2rem;
+        color: #e74c3c;
+        margin-top: 30px;
+    }
+</style>
+
+<div class="courses-container">
+    <h1>Courses Available</h1>
+
+    <!-- Level-Based Course Filters -->
+    <section class="level-filter">
+        <h2>Filter Courses by Level</h2>
+        <form method="GET" action="{% url 'courses' %}">
+            <label for="level">Choose a level:</label>
+            <select name="level" id="level">
+                <option value="beginner" {% if request.GET.level == 'beginner' %}selected{% endif %}>Beginner</option>
+                <option value="intermediate" {% if request.GET.level == 'intermediate' %}selected{% endif %}>Intermediate</option>
+                <option value="advanced" {% if request.GET.level == 'advanced' %}selected{% endif %}>Advanced</option>
+            </select>
+            <button type="submit">Filter</button>
+        </form>
+    </section>
+
+    <!-- Courses Section -->
+    <section class="courses-list">
+        <h2>Our Courses</h2>
+        {% if courses %}
+            <div class="course-list">
+                {% for course in courses %}
+                    <div class="course-card">
+                        <img src="{{ course.image.url }}" alt="{{ course.title }}" class="course-image">
+                        <h3>{{ course.title }}</h3>
+                        <p>{{ course.description }}</p>
+                        <p><strong>Level:</strong> {{ course.course_type }}</p>
+                        <p><strong>Lessons:</strong> {{ course.lessons_count }}</p>
+                        <a href="{% url 'course_detail' course.id %}" class="btn">View Course</a>
+                    </div>
+                {% endfor %}
+            </div>
+        {% else %}
+            <p class="no-courses-message">No courses available at this level. Please check back later or contact support for assistance.</p>
+        {% endif %}
+    </section>
+</div>
+
+{% endblock %}

@@ -1,0 +1,30 @@
+{% extends 'main_app/base.html' %}
+
+{% block title %}Course Lessons{% endblock %}
+
+{% block content %}
+    <div class="lesson-container">
+        <h1>Lessons for {{ course.title }}</h1>
+
+        {% if lessons.count > 0 %}
+            <ul>
+                {% for lesson in lessons %}
+                    <li>
+                        <h3>{{ lesson.title }}</h3>
+                        <p>{{ lesson.description }}</p>
+                        <p><strong>Scheduled At:</strong> {{ lesson.scheduled_at }}</p>
+
+                        <!-- Check if the user has already booked the lesson -->
+                        {% if user in lesson.booking_set.all %}
+                            <p>You have already booked this lesson!</p>
+                        {% else %}
+                            <p><a href="{% url 'book_lesson' lesson.id %}">Book This Lesson</a></p>
+                        {% endif %}
+                    </li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            <p>No lessons available for this course yet.</p>
+        {% endif %}
+    </div>
+{% endblock %}

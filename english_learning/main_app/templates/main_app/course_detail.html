@@ -1,0 +1,138 @@
+{% extends "main_app/base.html" %}
+
+{% block title %}{{ course.title }} - Course Detail{% endblock %}
+
+{% block content %}
+<div class="course-detail">
+    <h1>{{ course.title }}</h1>
+    
+    <div class="course-image-container">
+        <img src="{{ course.image.url }}" alt="{{ course.title }}" class="course-image">
+    </div>
+    
+    <div class="course-description">
+        <p>{{ course.description }}</p>
+    </div>
+
+    <div class="course-info">
+        <p><strong>Course Type:</strong> {{ course.course_type }}</p>
+        <p><strong>Lessons:</strong> {{ course.lessons_count }}</p>
+        <p><strong>Price:</strong> ¥ {{ course.price_in_yen|default:"Not Available" }}</p>
+    </div>
+
+    <!-- Enroll Now Button for Logged-in Users -->
+    {% if user.is_authenticated %}
+        <form action="{% url 'enroll_course' course.id %}" method="POST">
+            {% csrf_token %}
+            <button type="submit" class="btn enroll-btn">Enroll Now</button>
+        </form>
+    {% else %}
+        <p>You need to <a href="{% url 'login' %}">log in</a> to enroll in this course.</p>
+    {% endif %}
+
+    <a href="{% url 'home' %}" class="btn back-home-btn">Back to Home</a>
+</div>
+
+<style>
+    /* General Course Detail Section Styling */
+    .course-detail {
+        padding: 40px 20px;
+        background-color: #f4f4f4;
+        max-width: 1000px;
+        margin: 0 auto;
+        border-radius: 8px;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    }
+
+    .course-detail h1 {
+        font-size: 32px;
+        color: #333;
+        font-family: 'Arial', sans-serif;
+        margin-bottom: 20px;
+    }
+
+    .course-description {
+        font-size: 16px;
+        color: #555;
+        margin-bottom: 30px;
+    }
+
+    /* Course Image Styling */
+    .course-image-container {
+        text-align: center;
+        margin-bottom: 20px;
+    }
+
+    .course-image {
+        width: 100%;
+        max-width: 800px;
+        height: auto;
+        border-radius: 8px;
+    }
+
+    /* Course Info Styling */
+    .course-info {
+        margin-bottom: 30px;
+        font-size: 18px;
+        color: #444;
+    }
+
+    .course-info strong {
+        font-weight: 600;
+    }
+
+    /* Button Styling */
+    .btn {
+        display: inline-block;
+        padding: 12px 20px;
+        background-color: rgb(0, 153, 255);
+        color: #fff;
+        border-radius: 5px;
+        text-align: center;
+        font-size: 16px;
+        text-decoration: none;
+        transition: background-color 0.3s ease;
+        margin-bottom: 15px; /* Space between buttons */
+    }
+
+    .btn:hover {
+        background-color: #007bb5;
+    }
+
+    /* Enroll Button Styling */
+    .enroll-btn {
+        background-color: #28a745;
+        border: none;
+        cursor: pointer;
+    }
+
+    .enroll-btn:hover {
+        background-color: #218838;
+    }
+
+    /* Back to Home Button Styling */
+    .back-home-btn {
+        background-color: #007bb5;
+    }
+
+    .back-home-btn:hover {
+        background-color: #005fa3;
+    }
+
+    /* Message when not logged in */
+    p {
+        font-size: 16px;
+        color: #333;
+    }
+
+    p a {
+        color: rgb(0, 153, 255);
+        text-decoration: none;
+    }
+
+    p a:hover {
+        text-decoration: underline;
+    }
+</style>
+
+{% endblock %}

@@ -1,0 +1,87 @@
+{% extends "main_app/base.html" %}
+
+{% block content %}
+<h2>Login</h2>
+
+<form method="POST">
+    {% csrf_token %}
+    
+    <!-- Username or Email -->
+    <label for="username">Username or Email:</label>
+    <input type="text" id="username" name="username" value="{{ form.username.value|default:'' }}" required>
+
+    <!-- Password -->
+    <label for="password">Password:</label>
+    <input type="password" id="password" name="password" required>
+
+    <!-- Submit Button -->
+    <button type="submit">Login</button>
+</form>
+
+<!-- Internal CSS -->
+<style>
+    h2 {
+        text-align: center;
+        color: #333;
+        font-size: 32px;
+        margin-bottom: 20px;
+    }
+
+    form {
+        max-width: 500px;
+        margin: 0 auto;
+        padding: 20px;
+        background-color: #f9f9f9;
+        border-radius: 8px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    label {
+        display: block;
+        margin-bottom: 8px;
+        font-weight: bold;
+        font-size: 16px;
+        color: #333;
+    }
+
+    input {
+        width: 100%;
+        padding: 10px;
+        margin-bottom: 15px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        font-size: 16px;
+        box-sizing: border-box;
+    }
+
+    button {
+        width: 100%;
+        padding: 12px;
+        background-color: #007bb5;
+        color: white;
+        font-size: 18px;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+    }
+
+    button:hover {
+        background-color: #005f7a;
+    }
+
+    p {
+        text-align: center;
+        font-size: 16px;
+    }
+
+    a {
+        color: #007bb5;
+        text-decoration: none;
+    }
+
+    a:hover {
+        text-decoration: underline;
+    }
+</style>
+
+{% endblock %}

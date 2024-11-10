@@ -1,0 +1,40 @@
+{% extends "main_app/base.html" %}
+
+
+{% block title %}
+    {{ lesson.title }} | Lesson Details
+{% endblock %}
+
+{% block content %}
+    <div class="lesson-container">
+        <h1>{{ lesson.title }}</h1>
+        <p><strong>Course:</strong> <a href="{% url 'course_detail' course_id=lesson.course.id %}">{{ lesson.course.title }}</a></p>
+
+        <section class="lesson-content">
+            <h2>Lesson Content</h2>
+            <p>{{ lesson.content }}</p>
+        </section>
+
+        {% if lesson.video_url %}
+            <section class="lesson-video">
+                <h3>Watch the Lesson Video</h3>
+                <a href="{{ lesson.video_url }}" target="_blank">Click here to watch the video</a>
+            </section>
+        {% endif %}
+
+        <section class="lesson-timing">
+            <h3>Lesson Timing</h3>
+            <p><strong>Start Time:</strong> {{ lesson.start_time|date:"F j, Y, g:i a" }}</p>
+            <p><strong>Duration:</strong> {{ lesson.duration }}</p>
+        </section>
+
+        <section class="enrollment-section">
+            <h3>Enrolled?</h3>
+            {% if user.is_authenticated %}
+                <p>You are enrolled in this course.</p>
+            {% else %}
+                <p><a href="{% url 'enroll_course' course_id=lesson.course.id %}">Enroll now</a> to access this lesson.</p>
+            {% endif %}
+        </section>
+    </div>
+{% endblock %}

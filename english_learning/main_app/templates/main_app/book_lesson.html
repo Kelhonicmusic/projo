@@ -1,0 +1,130 @@
+{% extends 'main_app/base.html' %}
+
+{% block title %}Book a Lesson{% endblock %}
+
+{% block content %}
+    <div class="container">
+        <h1>Book Your Lesson</h1>
+        <p>You're about to book a lesson for the course: <strong>{{ lesson.course.title }}</strong></p>
+
+        <form method="POST">
+            {% csrf_token %}
+            <div class="form-group">
+                <label for="course">Course:</label>
+                <input type="text" id="course" name="course" class="form-control" value="{{ lesson.course.title }}" readonly>
+            </div>
+
+            <div class="form-group">
+                <label for="lesson_type">Lesson Type:</label>
+                <select id="lesson_type" name="lesson_type" class="form-control" required>
+                    <option value="private" {% if lesson.lesson_type == 'private' %}selected{% endif %}>Private</option>
+                    <option value="semi-private" {% if lesson.lesson_type == 'semi-private' %}selected{% endif %}>Semi-Private</option>
+                    <option value="group" {% if lesson.lesson_type == 'group' %}selected{% endif %}>Group</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="schedule">Preferred Schedule:</label>
+                <input type="datetime-local" id="schedule" name="schedule" class="form-control" required>
+            </div>
+
+            <button type="submit" class="btn btn-success">Book Lesson</button>
+        </form>
+    </div>
+
+    <style>
+        /* General Styles */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f8f9fa;
+            color: #333;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            font-size: 28px;
+            color: #333;
+            margin-bottom: 20px;
+        }
+
+        p {
+            font-size: 16px;
+            color: #555;
+            margin-bottom: 30px;
+        }
+
+        /* Form Styles */
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            font-weight: bold;
+            font-size: 16px;
+            color: #333;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 10px;
+            font-size: 16px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-sizing: border-box;
+        }
+
+        .form-control:focus {
+            border-color: #28a745;
+            outline: none;
+        }
+
+        /* Button Styles */
+        .btn-success {
+            background-color: #28a745;
+            color: white;
+            padding: 12px 20px;
+            font-size: 16px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .btn-success:hover {
+            background-color: #218838;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .container {
+                padding: 15px;
+            }
+
+            h1 {
+                font-size: 24px;
+            }
+
+            .form-group {
+                margin-bottom: 15px;
+            }
+
+            .form-control {
+                font-size: 14px;
+                padding: 8px;
+            }
+
+            .btn-success {
+                width: 100%;
+                padding: 14px;
+            }
+        }
+    </style>
+{% endblock %}

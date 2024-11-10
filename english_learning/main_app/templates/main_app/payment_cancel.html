@@ -1,0 +1,13 @@
+{% extends "main_app/base.html" %}
+
+{% block title %}Payment Cancelled{% endblock %}
+
+{% block content %}
+<div class="payment-cancel">
+    <h1>Payment Cancellation</h1>
+    <p>Your payment was cancelled. You have not been charged for this course enrollment.</p>
+    <p>If you would like to try again, please go back and complete the payment.</p>
+
+    <a href="{% url 'course_detail' course.id %}" class="btn back-btn">Back to Course</a>
+</div>
+{% endblock %}

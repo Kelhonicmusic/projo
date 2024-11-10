@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}English Learning Platform{% endblock %}</title>
+
+    <style>
+        /* Global Styles */
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f4f4f4;
+            color: #333;
+            margin: 0;
+            padding: 0;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        /* Navigation Bar */
+        nav {
+            background-color: #2c3e50;
+            padding: 20px 40px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            height: 70px;
+            position: relative;
+        }
+
+        nav ul {
+            list-style: none;
+            display: flex;
+            justify-content: center;
+            margin: 0;
+            padding: 0;
+        }
+
+        nav ul li {
+            margin: 0 20px;
+        }
+
+        nav ul li a {
+            color: #ecf0f1;
+            font-size: 20px;
+            font-weight: bold;
+            text-transform: uppercase;
+        }
+
+        /* Sidebar Navigation for Mobile */
+        .sidebar {
+            height: 100%;
+            width: 0;
+            position: fixed;
+            top: 0;
+            left: 0;
+            background-color: #2c3e50;
+            overflow-x: hidden;
+            transition: 0.3s;
+            padding-top: 60px;
+            z-index: 9999;
+        }
+
+        .sidebar a {
+            padding: 8px 8px 8px 32px;
+            text-decoration: none;
+            font-size: 25px;
+            color: #ecf0f1;
+            display: block;
+            transition: 0.3s;
+        }
+
+        .sidebar a:hover {
+            background-color: #007bb5;
+        }
+
+        .sidebar .close-btn {
+            position: absolute;
+            top: 10px;
+            right: 25px;
+            font-size: 36px;
+            color: #ecf0f1;
+            cursor: pointer;
+        }
+
+        /* Hamburger Menu */
+        .hamburger {
+            display: none;
+            font-size: 30px;
+            color: #ecf0f1;
+            cursor: pointer;
+        }
+
+        /* Content Section */
+        .content {
+            padding: 40px 20px;
+            text-align: center;
+        }
+
+        /* Footer Styles */
+        footer {
+            background-color: #2c3e50;
+            color: #ecf0f1;
+            padding: 40px 20px;
+            text-align: center;
+            box-sizing: border-box; /* Ensure padding does not affect layout */
+        }
+
+        .footer-container {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 30px;
+            flex-wrap: wrap; /* Allow items to wrap on smaller screens */
+        }
+
+        .footer-left, .footer-right {
+            width: 45%;
+            margin-bottom: 20px; /* Add spacing between items on mobile */
+        }
+
+        .footer-left h3, .footer-right h4 {
+            font-size: 24px;
+            margin: 0;
+        }
+
+        .footer-left p, .footer-right p {
+            font-size: 16px;
+            margin: 10px 0;
+        }
+
+        .footer-bottom {
+            border-top: 1px solid #7f8c8d;
+            padding-top: 20px;
+        }
+
+        .footer-bottom p {
+            font-size: 14px;
+            margin: 0;
+        }
+
+        /* Media Query for Mobile */
+        @media (max-width: 768px) {
+            .footer-container {
+                flex-direction: column; /* Stack the sections on top of each other */
+                align-items: center; /* Center content */
+            }
+
+            .footer-left, .footer-right {
+                width: 100%; /* Make the sections full-width */
+                text-align: center; /* Center the text in mobile view */
+            }
+
+            .footer-bottom {
+                padding-top: 10px;
+            }
+
+            nav ul {
+                display: none;
+            }
+
+            .hamburger {
+                display: block;
+            }
+
+            .sidebar {
+                width: 250px;
+                display: block;
+            }
+
+            nav.active ul {
+                display: flex;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Navigation Bar -->
+    <nav>
+        <div class="hamburger" onclick="toggleMenu()">&#9776;</div>
+        <ul>
+            <li><a href="{% url 'home' %}">Home</a></li>
+            <li><a href="{% url 'courses' %}">Courses</a></li>
+            <li><a href="{% url 'about' %}">About</a></li>
+            <li><a href="{% url 'contact' %}">Contact</a></li>
+
+            {% if not user.is_authenticated %}
+                <li><a href="{% url 'register' %}">Register</a></li>
+            {% endif %}
+
+            {% if user.is_authenticated %}
+                {% if user.role == 'student' %}
+                    <li><a href="{% url 'student_dashboard' %}">Student Dashboard</a></li>
+                    <li><a href="{% url 'practice' %}">Practice Exercises</a></li>
+                {% elif user.role == 'teacher' %}
+                    <li><a href="{% url 'teacher_dashboard' %}">Teacher Dashboard</a></li>
+                {% elif user.role == 'admin' %}
+                    <li><a href="{% url 'admin_dashboard' %}">Admin Dashboard</a></li>
+                {% endif %}
+            {% endif %}
+        </ul>
+    </nav>
+
+    <!-- Sidebar -->
+    <div id="mySidebar" class="sidebar">
+        <a href="javascript:void(0)" class="close-btn" onclick="closeMenu()">×</a>
+        <a href="{% url 'home' %}">Home</a>
+        <a href="{% url 'courses' %}">Courses</a>
+        <a href="{% url 'about' %}">About</a>
+        <a href="{% url 'contact' %}">Contact</a>
+
+        {% if not user.is_authenticated %}
+            <a href="{% url 'register' %}">Register</a>
+        {% endif %}
+
+        {% if user.is_authenticated %}
+            {% if user.role == 'student' %}
+                <a href="{% url 'student_dashboard' %}">Student Dashboard</a>
+                <a href="{% url 'practice' %}">Practice Exercises</a>
+            {% elif user.role == 'teacher' %}
+                <a href="{% url 'teacher_dashboard' %}">Teacher Dashboard</a>
+            {% elif user.role == 'admin' %}
+                <a href="{% url 'admin_dashboard' %}">Admin Dashboard</a>
+            {% endif %}
+        {% endif %}
+    </div>
+
+    <!-- Content Section -->
+    <div class="content">
+        {% block content %}{% endblock %}
+    </div>
+
+    <!-- Footer Section -->
+    <footer>
+        <div class="footer-container">
+            <div class="footer-left">
+                <h3>About Us</h3>
+                <p>We are a leading platform for English learning, offering various courses for all levels.</p>
+            </div>
+            <div class="footer-right">
+                <h4>Contact Information</h4>
+                <p>Email: info@englishlearning.com</p>
+                <p>Phone: +1 234 567 890</p>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2024 English Learning Platform | All Rights Reserved</p>
+        </div>
+    </footer>
+
+    <script>
+        // JavaScript to toggle the mobile menu
+        function toggleMenu() {
+            document.getElementById("mySidebar").style.width = "250px";
+        }
+
+        function closeMenu() {
+            document.getElementById("mySidebar").style.width = "0";
+        }
+    </script>
+
+</body>
+</html>

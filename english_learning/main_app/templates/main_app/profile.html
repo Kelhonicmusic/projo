@@ -1,0 +1,21 @@
+{% extends "base_generic.html" %}
+
+{% block content %}
+<section class="profile">
+    <h2>Your Profile</h2>
+
+    <!-- Display the user's email -->
+    <p><strong>Email:</strong> {{ user.email }}</p>
+
+    <!-- Check if the profile exists, then display additional info -->
+    {% if user.profile %}
+        <p><strong>Phone Number:</strong> {{ user.profile.phone_number }}</p>
+        <p><strong>Gender:</strong> {{ user.profile.get_gender_display }}</p>
+        <p><strong>Interests:</strong> {{ user.profile.interests }}</p>
+        <p><strong>Hobbies:</strong> {{ user.profile.hobbies }}</p>
+        <p><strong>Countries Traveled:</strong> {{ user.profile.countries_travelled }}</p>
+    {% else %}
+        <p>No additional profile information available.</p>
+    {% endif %}
+</section>
+{% endblock %}

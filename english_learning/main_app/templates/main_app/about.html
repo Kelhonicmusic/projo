@@ -1,0 +1,46 @@
+{% extends 'main_app/base.html' %}
+
+{% block title %}About Us - Online English School{% endblock %}
+{% block description %}Learn more about our mission, vision, and the team behind our online English school.{% endblock %}
+
+{% block content %}
+<style>
+    /* About Us Section Styles */
+    .about {
+        background-color: #f8f9fa;
+        padding: 40px;
+        border-radius: 8px;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        max-width: 1000px;
+        margin: 0 auto;
+        text-align: center;
+    }
+
+    .about h2 {
+        font-size: 2.5rem;
+        color: #2c3e50;
+        margin-bottom: 20px;
+        font-weight: bold;
+    }
+
+    .about p {
+        font-size: 1.1rem;
+        color: #555;
+        line-height: 1.6;
+        margin-bottom: 20px;
+    }
+
+    .about h3 {
+        font-size: 2rem;
+        color: #34495e;
+        margin-top: 30px;
+    }
+</style>
+
+<div class="about">
+    <h2>About Us</h2>
+    <p>Our online English school aims to provide the best learning experience for students across Japan. Our mission is to enhance English proficiency through interactive and engaging lessons.</p>
+    <h3>Our Team</h3>
+    <p>We have a diverse team of qualified teachers dedicated to helping students achieve their language goals.</p>
+</div>
+{% endblock %}

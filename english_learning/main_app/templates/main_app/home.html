@@ -1,0 +1,260 @@
+{% extends "main_app/base.html" %}
+
+{% block title %}Home - English Learning Platform{% endblock %}
+
+{% load static %}
+
+{% block content %}
+    <section class="header_title">
+        <h1>Welcome to the English Learning Platform</h1>
+        <p>Your journey to mastering the English language starts here. Explore our courses designed for learners at different levels.</p>
+    </section>
+
+    <!-- Course Levels Section -->
+    <section class="overview">
+        <h2>Course Levels</h2>
+        <div class="overview-image">
+            <img src="{% static 'main_app/images/why.jpg' %}" alt="English Learning Overview">
+        </div>
+
+        <div class="level-descriptions">
+            <div class="level">
+                <h3>Beginner</h3>
+                <p>Start your learning journey with foundational knowledge. Learn the alphabet, basic vocabulary, and simple sentence structures.</p>
+            </div>
+
+            <div class="level">
+                <h3>Intermediate</h3>
+                <p>Build on your basic knowledge and dive into more complex topics, including conversational English, grammar, and writing.</p>
+            </div>
+
+            <div class="level">
+                <h3>Business</h3>
+                <p>Master English for professional environments. Focus on business communication, writing reports, and professional presentations.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Courses Section -->
+    <section class="courses">
+        <h2>Available Courses</h2>
+        <div class="course-list">
+            {% for course in courses %}
+                <div class="course-card">
+                    <img src="{{ course.image.url }}" alt="{{ course.title }}" class="course-image">
+                    <h3>{{ course.title }}</h3>
+                    <p><strong>Price:</strong> ¥ {{ course.price_in_yen|default:"Not Available" }}</p>
+                    <a href="{% url 'course_detail' course.id %}" class="btn">Learn More</a>
+                </div>
+            {% empty %}
+                <p>No courses available at the moment.</p>
+            {% endfor %}
+        </div>
+    </section>
+
+    <style>
+        /* Header Title Section Styling */
+        .header_title {
+            background-color: rgb(0, 153, 255);
+            padding: 40px 20px;
+            text-align: center;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .header_title h1 {
+            font-size: 36px;
+            color: #000000;
+            font-family: 'Arial', sans-serif;
+            margin-bottom: 10px;
+            font-weight: 700;
+        }
+
+        .header_title p {
+            font-size: 18px;
+            color: #131414;
+            font-family: 'Georgia', serif;
+            line-height: 1.6;
+            max-width: 800px;
+            margin: 0 auto;
+            padding-top: 10px;
+        }
+
+        /* Course Levels Section Styling */
+        .overview {
+            text-align: center;
+            padding: 40px 20px;
+            background-color: #f9f9f9;
+        }
+
+        .overview h2 {
+            font-size: 28px;
+            color: #333;
+            font-family: 'Arial', sans-serif;
+            margin-bottom: 20px;
+        }
+
+        .overview-image img {
+            width: 100%;
+            max-width: 600px;
+            height: auto;
+            border-radius: 8px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .level-descriptions {
+            display: flex;
+            justify-content: space-around;
+            margin-top: 30px;
+            flex-wrap: wrap;
+        }
+
+        .level {
+            max-width: 300px;
+            background-color: #ffffff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            margin: 10px;
+        }
+
+        .level h3 {
+            font-size: 22px;
+            color: #333;
+            font-weight: 600;
+        }
+
+        .level p {
+            font-size: 16px;
+            color: #555;
+            line-height: 1.5;
+        }
+
+        /* Courses Section Styling */
+        .courses {
+            padding: 40px 20px;
+            background-color: #ffffff;
+        }
+
+        .courses h2 {
+            font-size: 28px;
+            color: #333;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .course-list {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .course-card {
+            background-color: #f8f8f8;
+            border-radius: 8px;
+            margin: 10px;
+            padding: 20px;
+            max-width: 300px;
+            width: 100%;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+
+        .course-image {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            border-radius: 8px;
+        }
+
+        .course-card h3 {
+            font-size: 20px;
+            color: #333;
+            margin: 15px 0;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            max-width: 250px;
+        }
+
+        .course-card p {
+            font-size: 16px;
+            color: #777;
+        }
+
+        .btn {
+            display: inline-block;
+            background-color: rgb(0, 153, 255);
+            color: #fff;
+            padding: 10px 20px;
+            border-radius: 4px;
+            text-decoration: none;
+            margin-top: 10px;
+            transition: background-color 0.3s ease;
+        }
+
+        .btn:hover {
+            background-color: #007bb5;
+        }
+
+        /* Mobile Responsive Design */
+        @media (max-width: 768px) {
+            .header_title h1 {
+                font-size: 28px;
+            }
+
+            .header_title p {
+                font-size: 16px;
+            }
+
+            .overview h2 {
+                font-size: 24px;
+            }
+
+            .level-descriptions {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .level {
+                max-width: 100%;
+                margin-bottom: 20px;
+            }
+
+            .course-card {
+                max-width: 90%;
+                margin: 10px auto;
+            }
+
+            .course-card h3 {
+                font-size: 18px;
+                max-width: 200px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .header_title h1 {
+                font-size: 24px;
+            }
+
+            .header_title p {
+                font-size: 14px;
+            }
+
+            .overview h2 {
+                font-size: 20px;
+            }
+
+            .level h3 {
+                font-size: 18px;
+            }
+
+            .level p {
+                font-size: 14px;
+            }
+
+            .course-card h3 {
+                font-size: 16px;
+            }
+        }
+    </style>
+{% endblock %}
